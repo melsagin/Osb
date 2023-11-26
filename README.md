@@ -19,5 +19,4 @@ Bu sırada kullanıcı istekte bulunurken bir kullanıcı adı ve şifre isteyen
 Bunların yanı sıra SOAP türünde dönen bir cevabı REST türüne dönüştürmeyi sağlayan bir mekanizma düşünülmüş ve OSB ortamında tasarlanmıştır. 
 Daha sonra EBF’in sürekli Provider’a gitmesinden ziyade daha önce çağrısı yapılan verileri bir yere kaydetse ve bu verileri bir kez daha çağrı yapıldığında buradan alınsa proje maliyeti azaltılmış olmaz mı düşüncesiyle yola çıkarak bir veritabanı kullanılır ve veriler buraya kaydedilir, sonra kullanıcı aynı veri için ikinci kez istekte bulunduğunda bu veri, veritabanından çekilir.
 Böylece ara katmanda akış yukarıda belirtildiği biçimde gerçekleşir.
-Aşağıda da projenin detaylı iş akış şeması bulunmaktadır.
 
