@@ -1,0 +1,75 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://tempuri.org/PurchaseOrderSchema.xs"
+           targetNamespace="http://tempuri.org/PurchaseOrderSchema.xs"
+           elementFormDefault="qualified">
+
+    <!-- elementler -->
+    <!--TODO -->
+ <xs:element name="FULL_COUNTRY_INFO_REQUEST_REQ" type="tns:FULL_COUNTRY_INFO_REQUEST_REQ_TYPE"/>
+ <xs:element name="FULL_COUNTRY_INFO_RESPONSE_REQ" type="tns:FULL_COUNTRY_INFO_RESPONSE_REQ_TYPE"/>
+ <xs:element name="COUNTRY_ISO_CODE_REQUEST_REQ" type="tns:COUNTRY_ISO_CODE_REQUEST_REQ_TYPE"/>
+ <xs:element name="COUNTRY_ISO_CODE_REPONSE_REQ" type="tns:COUNTRY_ISO_CODE_REPONSE_REQ_TYPE"/>
+
+    <!-- complexTypes -->
+<xs:complexType name="COUNTRY_ISO_CODE_REQUEST_REQ_TYPE">
+    <xs:sequence>
+     <xs:element name="S_COUNTRY_NAME" type="xs:string"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="COUNTRY_ISO_CODE_REPONSE_REQ_TYPE">
+    <xs:sequence>
+      <xs:element name="P_REQ_INFO" type="tns:P_REQ_INFO_TYPE"/>
+     <xs:element name="COUNTRY_ISO_CODE_RESULT" type="xs:string"/>
+    </xs:sequence>
+</xs:complexType>
+
+ <xs:complexType name="FULL_COUNTRY_INFO_REQUEST_REQ_TYPE">
+  <xs:sequence>
+    <xs:element name="P_REQ_INFO" type="tns:P_REQ_INFO_TYPE"/>
+   <xs:element name="S_COUNTRY_ISO_CODE" type="xs:string"/>
+  </xs:sequence>
+ </xs:complexType>
+
+ <xs:complexType name="FULL_COUNTRY_INFO_RESPONSE_REQ_TYPE">
+  <xs:sequence>
+    <xs:element name="P_REQ_INFO" type="tns:P_REQ_INFO_TYPE"/>
+   <xs:element name="FULL_COUNTRY_INFO_RESULT" type="tns:T_COUNTRY_INFO"/>
+  </xs:sequence>
+ </xs:complexType>
+ 
+ <xs:complexType name="T_COUNTRY_INFO">
+  <xs:sequence>
+    <xs:element name="S_ISO_CODE" type="xs:string"/>
+    <xs:element name="S_NAME" type="xs:string"/>
+    <xs:element name="S_CAPITAL_CITY" type="xs:string"/>
+    <xs:element name="S_PHONE_CODE" type="xs:string"/>
+    <xs:element name="S_CONTINENT_CODE" type="xs:string"/>
+    <xs:element name="S_CURRENCY_ISO_CODE" type="xs:string"/>
+    <xs:element name="S_COUNTRY_FLAG" type="xs:string"/>
+    <xs:element name="LANGUAGES" type="tns:ARRAY_OFT_LANGUAGE"/>
+  </xs:sequence>
+ </xs:complexType>
+
+ <xs:complexType name="ARRAY_OFT_LANGUAGE">
+    <xs:sequence>
+      <xs:element name="T_LANGUAGE" type="tns:T_LANGUAGE" maxOccurs="unbounded"/>
+    </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="T_LANGUAGE">
+    <xs:sequence>
+      <xs:element name="S_ISO_CODE" type="xs:string"/>
+      <xs:element name="S_NAME" type="xs:string"/>
+    </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="P_REQ_INFO_TYPE">
+    <xs:sequence>
+      <xs:element name="TRANSACTION_ID" type="xs:string"/>
+			<xs:element name="RETURN_CODE" type="xs:string" minOccurs="0"/>
+			<xs:element name="RETURN_MESSAGE" type="xs:string" minOccurs="0"/>
+    </xs:sequence>		
+	</xs:complexType>
+
+</xs:schema>

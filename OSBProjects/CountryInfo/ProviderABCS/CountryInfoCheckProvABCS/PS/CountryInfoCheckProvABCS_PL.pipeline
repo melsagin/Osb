@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CountryInfo/Resources/CountryInfoCheckProvABCS"/>
+            <con:binding>
+                <con:name>CountryInfoCheckProvABCSBinding</con:name>
+                <con:namespace>http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57377e.N626830e.0.1896941fd7d.N7fff">
+            <con:stage id="_StageId-N3f57377e.N626830e.0.1896941fd7d.N7ffd" name="Stage_Assign_Body">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="request">
+                        <con2:id>_ActionId-N3f57377e.N626830e.0.1896941fd7d.N7ff5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57377e.N626830e.0.1896941fd7d.N7ff1" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-N3f57377e.N626830e.0.1896941fd7d.N7fed</con2:id>
+                        <con1:location>
+                            <con2:xpathText>.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xsltTransform>
+                                <con2:resource ref="CountryInfo/ProviderABCS/CountryInfoCheckProvABCS/Resources/Transform/ISOCOdeTransformInput"/>
+                                <con2:input>$body/*</con2:input>
+                            </con2:xsltTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57377e.N626830e.0.1896941fd7d.N7ffe">
+            <con:stage id="_StageId-N3f5737b5.N61723716.0.189b617d56a.N7ffa" name="Stage2">
+                <con:context>
+                    <con2:userNsDecl prefix="pur" namespace="http://tempuri.org/PurchaseOrderSchema.xs"/>
+                </con:context>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-N3f5737b5.N61723716.0.189b617d56a.N7ff9</con2:id>
+                        <con1:case id="_BranchId-N3f5737b5.N61723716.0.189b617d56a.N7ff8">
+                            <con1:condition>
+                                <con2:xqueryText>$request//pur:pReqInfo/pur:TRANSACTION_ID</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id>_ActionId-N3f57377e.N626830e.0.1896941fd7d.N7fea</con2:id>
+                                    <con1:location>
+                                        <con2:xpathText>.</con2:xpathText>
+                                    </con1:location>
+                                    <con1:expr>
+                                        <con2:xsltTransform>
+                                            <con2:resource ref="CountryInfo/ProviderABCS/CountryInfoCheckProvABCS/Resources/Transform/ISOCodeTransformOutput"/>
+                                            <con2:input>$body/*</con2:input>
+                                            <con2:param name="TransactionId">
+                                                <con2:path>$request//pur:pReqInfo/pur:TRANSACTION_ID</con2:path>
+                                            </con2:param>
+                                        </con2:xsltTransform>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:replace varName="body" contents-only="true">
+                                <con2:id>_ActionId-N3f5737b5.N61723716.0.189b617d56a.N7fc4</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xsltTransform>
+                                        <con2:resource ref="CountryInfo/ProviderABCS/CountryInfoCheckProvABCS/Resources/Transform/ISOCodeTransformOutputNoT_ID"/>
+                                        <con2:input>$body/*</con2:input>
+                                    </con2:xsltTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57377e.N626830e.0.1896941fd7d.N7ffb">
+            <con:stage id="_StageId-N3f57377e.N626830e.0.1896941fd7d.N7ff9" name="Stage_Assign_Body2">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="request">
+                        <con2:id>_ActionId-N3f57377e.N626830e.0.1896941fd7d.N7ff2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57377e.N626830e.0.1896941fd7d.N7ff0" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-N3f57377e.N626830e.0.1896941fd7d.N7fe7</con2:id>
+                        <con1:location>
+                            <con2:xpathText>.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xsltTransform>
+                                <con2:resource ref="CountryInfo/ProviderABCS/CountryInfoCheckProvABCS/Resources/Transform/FullCountryInfoTransformInput"/>
+                                <con2:input>$body/*</con2:input>
+                            </con2:xsltTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57377e.N626830e.0.1896941fd7d.N7ffa">
+            <con:stage id="_StageId-N3f57377e.N626830e.0.1896941fd7d.N7ff8" name="Stage1">
+                <con:context>
+                    <con2:userNsDecl prefix="pur" namespace="http://tempuri.org/PurchaseOrderSchema.xs"/>
+                </con:context>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-N3f5737b5.N61723716.0.189b617d56a.N7f6f</con2:id>
+                        <con1:case id="_BranchId-N3f5737b5.N61723716.0.189b617d56a.N7f6e">
+                            <con1:condition>
+                                <con2:xqueryText>$request//pur:pReqInfo/pur:TRANSACTION_ID</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace contents-only="true" varName="body">
+                                    <con2:id>_ActionId-N3f57377e.N626830e.0.1896941fd7d.N7fe4</con2:id>
+                                    <con1:location>
+                                        <con2:xpathText>.</con2:xpathText>
+                                    </con1:location>
+                                    <con1:expr>
+                                        <con2:xsltTransform>
+                                            <con2:resource ref="CountryInfo/ProviderABCS/CountryInfoCheckProvABCS/Resources/Transform/FullCountryInfoTransformOutput"/>
+                                            <con2:input>$body/*</con2:input>
+                                            <con2:param name="TransactionId">
+                                                <con2:path>$request//pur:pReqInfo/pur:TRANSACTION_ID</con2:path>
+                                            </con2:param>
+                                        </con2:xsltTransform>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:replace contents-only="true" varName="body">
+                                <con2:id>_ActionId-N3f5737b5.N61723716.0.189b617d56a.N7f68</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xsltTransform>
+                                        <con2:resource ref="CountryInfo/ProviderABCS/CountryInfoCheckProvABCS/Resources/Transform/FullCountryInfoTransformOutputNOT_ID"/>
+                                        <con2:input>$body/*</con2:input>
+                                    </con2:xsltTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" id="_FlowId-N3f57377e.N626830e.0.1896941fd7d.N8000" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="alISOKod">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>request-N3f57377e.N626830e.0.1896941fd7d.N7fff</con:request>
+                                <con:response>response-N3f57377e.N626830e.0.1896941fd7d.N7ffe</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode1">
+                                <con:context/>
+                                <con:actions>
+                                    <con3:route>
+                                        <con2:id>_ActionId-N3f57377e.63618e81.0.1896e1d9450.N7ff8</con2:id>
+                                        <con3:service ref="CountryInfo/ProviderABCS/BS/CountryInfo_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con3:operation>CountryISOCode</con3:operation>
+                                        <con3:outboundTransform>
+                                            <con1:routing-options>
+                                                <con2:id>_ActionId-N3f57377e.63618e81.0.1896e1d9450.N7ff1</con2:id>
+                                                <con1:uriExpr>
+                                                    <con2:xqueryText>'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso'</con2:xqueryText>
+                                                </con1:uriExpr>
+                                                <con1:mode>request-response</con1:mode>
+                                            </con1:routing-options>
+                                        </con3:outboundTransform>
+                                        <con3:responseTransform/>
+                                    </con3:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="alTumUlkeBilgileri">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode2">
+                                <con:request>request-N3f57377e.N626830e.0.1896941fd7d.N7ffb</con:request>
+                                <con:response>response-N3f57377e.N626830e.0.1896941fd7d.N7ffa</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode2">
+                                <con:context/>
+                                <con:actions>
+                                    <con3:route>
+                                        <con2:id>_ActionId-N3f57377e.63618e81.0.1896e1d9450.N7ff4</con2:id>
+                                        <con3:service ref="CountryInfo/ProviderABCS/BS/CountryInfo_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con3:operation>FullCountryInfo</con3:operation>
+                                        <con3:outboundTransform>
+                                            <con1:routing-options>
+                                                <con2:id>_ActionId-N3f57377e.63618e81.0.1896e1d9450.N7fee</con2:id>
+                                                <con1:uriExpr>
+                                                    <con2:xqueryText>'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso'</con2:xqueryText>
+                                                </con1:uriExpr>
+                                                <con1:mode>request-response</con1:mode>
+                                            </con1:routing-options>
+                                        </con3:outboundTransform>
+                                        <con3:responseTransform/>
+                                    </con3:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

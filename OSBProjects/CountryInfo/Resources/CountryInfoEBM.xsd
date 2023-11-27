@@ -1,0 +1,76 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://tempuri.org/PurchaseOrderSchema.xs"
+           targetNamespace="http://tempuri.org/PurchaseOrderSchema.xs"
+           elementFormDefault="qualified">
+
+    <!-- elementler -->
+    <!--TODO -->
+ <xs:element name="TumUlkeBilgileriIstek" type="tns:TumUlkeBilgileriIstekTip"/>
+ <xs:element name="TumUlkeBilgileriYanit" type="tns:TumUlkeBilgileriYanitTip"/>
+ <xs:element name="UlkeISOKodIstek" type="tns:UlkeISOKodIstekTip"/>
+ <xs:element name="UlkeISOKodYanit" type="tns:UlkeISOKodYanitTip"/>
+
+    <!-- complexTypes -->
+<xs:complexType name="UlkeISOKodIstekTip">
+    <xs:sequence>
+      <xs:element name="pReqInfo" type="tns:pReqInfoType"/>
+     <xs:element name="sUlkeAdi" type="xs:string"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UlkeISOKodYanitTip">
+    <xs:sequence>
+      <xs:element name="pReqInfo" type="tns:pReqInfoType"/>
+     <xs:element name="UlkeISOKodSonuc" type="xs:string"/>
+    </xs:sequence>
+</xs:complexType>
+
+ <xs:complexType name="TumUlkeBilgileriIstekTip">
+  <xs:sequence>
+    <xs:element name="pReqInfo" type="tns:pReqInfoType"/>
+   <xs:element name="sUlkeISOKod" type="xs:string"/>
+  </xs:sequence>
+ </xs:complexType>
+
+ <xs:complexType name="TumUlkeBilgileriYanitTip">
+  <xs:sequence>
+    <xs:element name="pReqInfo" type="tns:pReqInfoType"/>
+   <xs:element name="TumUlkeBilgileriSonuc" type="tns:tUlkeBilgileri"/>
+  </xs:sequence>
+ </xs:complexType>
+ 
+ <xs:complexType name="tUlkeBilgileri">
+  <xs:sequence>
+    <xs:element name="sISOKod" type="xs:string"/>
+    <xs:element name="sAd" type="xs:string"/>
+    <xs:element name="sBaskent" type="xs:string"/>
+    <xs:element name="sTelefonKod" type="xs:string"/>
+    <xs:element name="sKitaKod" type="xs:string"/>
+    <xs:element name="sParaBirimiISOKod" type="xs:string"/>
+    <xs:element name="sUlkeBayragi" type="xs:string"/>
+    <xs:element name="Dilleri" type="tns:DiziOftDil"/>
+  </xs:sequence>
+ </xs:complexType>
+
+ <xs:complexType name="DiziOftDil">
+    <xs:sequence>
+      <xs:element name="tDil" type="tns:tDil" maxOccurs="unbounded"/>
+    </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="tDil">
+    <xs:sequence>
+      <xs:element name="sISOKod" type="xs:string"/>
+      <xs:element name="sAd" type="xs:string"/>
+    </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="pReqInfoType">
+    <xs:sequence>
+      <xs:element name="TRANSACTION_ID" type="xs:string"/>
+			<xs:element name="RETURN_CODE" type="xs:string" minOccurs="0"/>
+			<xs:element name="RETURN_MESSAGE" type="xs:string" minOccurs="0"/>
+    </xs:sequence>		
+	</xs:complexType>
+
+</xs:schema>

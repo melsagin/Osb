@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:inpl="http://tempuri.org/PurchaseOrderSchema.xs" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CountryInfoCheckReqABCS_REST">RestService</doc>
+   <grammars>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:inpl="http://tempuri.org/PurchaseOrderSchema.xs" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:client="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckReqABCS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+			<import namespace="http://tempuri.org/PurchaseOrderSchema.xs" schemaLocation="CountryInfoReqEBM.xsd"/>
+		</schema>
+   </grammars>
+   <resources>
+      <resource path="/GET_FULL_COUNTRY_INFO_REQ">
+         <method name="POST" soa:wsdlOperation="GET_FULL_COUNTRY_INFO_REQ">
+            <request>
+               <representation mediaType="application/json" element="cns:COUNTRY_ISO_CODE_REQUEST_REQ" xmlns:cns="http://tempuri.org/PurchaseOrderSchema.xs"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:FULL_COUNTRY_INFO_RESPONSE_REQ" xmlns:cns="http://tempuri.org/PurchaseOrderSchema.xs"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

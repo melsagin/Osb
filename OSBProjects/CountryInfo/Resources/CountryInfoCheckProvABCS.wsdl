@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+
+    xmlns:inpl="http://tempuri.org/PurchaseOrderSchema.xs" 
+    xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" 
+    xmlns:client="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    name="CountryInfoCheckProvABCS" 
+    targetNamespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS">
+
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://tempuri.org/PurchaseOrderSchema.xs" schemaLocation="CountryInfoEBM.xsd"/>
+		</schema>
+	</wsdl:types>
+
+	<wsdl:message name="alISOKodType">
+		<wsdl:part name="payload" element="inpl:UlkeISOKodIstek"/>
+	</wsdl:message>
+	<wsdl:message name="alISOKodYanitType">
+		<wsdl:part name="payload" element="inpl:UlkeISOKodYanit"/>
+	</wsdl:message>
+
+	<wsdl:message name="alTumUlkeBilgileriType">
+		<wsdl:part name="payload" element="inpl:TumUlkeBilgileriIstek"/>
+	</wsdl:message>
+	<wsdl:message name="alTumUlkeBilgileriYanitType">
+		<wsdl:part name="payload" element="inpl:TumUlkeBilgileriYanit"/>
+	</wsdl:message>
+
+	<wsdl:portType name="CountryInfoCheckProvABCS">
+
+		<wsdl:operation name="alISOKod">
+			<wsdl:input message="client:alISOKodType"/>
+			<wsdl:output message="client:alISOKodYanitType"/>
+		</wsdl:operation>
+
+			<wsdl:operation name="alTumUlkeBilgileri">
+			<wsdl:input message="client:alTumUlkeBilgileriType"/>
+			<wsdl:output message="client:alTumUlkeBilgileriYanitType"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="CountryInfoCheckProvABCSBinding" type="client:CountryInfoCheckProvABCS">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="alISOKod">
+			<soap:operation soapAction="alISOKod" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal" namespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" namespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="alTumUlkeBilgileri">
+			<soap:operation soapAction="alTumUlkeBilgileri" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal" namespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" namespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckProvABCS"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="CountryInfoCheckProvABCS_ep">
+		<wsdl:port name="CountryInfoCheckProvABCS_pt" binding="client:CountryInfoCheckProvABCSBinding">
+			<soap:address location="http://dev.senfoni.etiya.com:80/soa-infra/services/default/CountryInfoCheckProvABCS/CountryInfoCheckProvABCS_ep"/>
+		</wsdl:port>
+	</wsdl:service>
+    
+	<plnk:partnerLinkType name="CountryInfoCheckProvABCS">
+		<plnk:role name="CountryInfoCheckProvABCSProvider" portType="client:CountryInfoCheckProvABCS"/>
+	</plnk:partnerLinkType>
+</wsdl:definitions>

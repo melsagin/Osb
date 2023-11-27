@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+
+    xmlns:inpl="http://tempuri.org/PurchaseOrderSchema.xs" 
+    xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" 
+    xmlns:client="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckReqABCS" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    name="CountryInfoCheckReqABCS"
+    targetNamespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckReqABCS">
+
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://tempuri.org/PurchaseOrderSchema.xs" schemaLocation="CountryInfoReqEBM.xsd"/>
+		</schema>
+	</wsdl:types>
+
+	<wsdl:message name="GET_ISO_CODE_REQ_TYPE">
+		<wsdl:part name="payload" element="inpl:COUNTRY_ISO_CODE_REQUEST_REQ"/>
+	</wsdl:message>
+	<wsdl:message name="GET_FULL_COUNTRY_INFO_RESPONSE_REQ_TYPE">
+		<wsdl:part name="payload" element="inpl:FULL_COUNTRY_INFO_RESPONSE_REQ"/>
+	</wsdl:message>
+
+	<wsdl:portType name="CountryInfoCheckReqABCS">
+
+		<wsdl:operation name="GET_FULL_COUNTRY_INFO_REQ">
+			<wsdl:input message="client:GET_ISO_CODE_REQ_TYPE"/>
+			<wsdl:output message="client:GET_FULL_COUNTRY_INFO_RESPONSE_REQ_TYPE"/>
+		</wsdl:operation>
+
+	</wsdl:portType>
+
+	<wsdl:binding name="CountryInfoCheckReqABCSBinding" type="client:CountryInfoCheckReqABCS">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="GET_FULL_COUNTRY_INFO_REQ">
+			<soap:operation soapAction="GET_FULL_COUNTRY_INFO_REQ" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal" namespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckReqABCS"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" namespace="http://xmlns.oracle.com/OSB/CountryInfo/CountryInfoCheckReqABCS"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="CountryInfoCheckReqABCS_ep">
+		<wsdl:port name="CountryInfoCheckReqABCS_pt" binding="client:CountryInfoCheckReqABCSBinding">
+			<soap:address location="http://dev.senfoni.etiya.com:80/soa-infra/services/default/CountryInfoCheckReqABCS/CountryInfoCheckReqABCS_ep"/>
+		</wsdl:port>
+	</wsdl:service>
+    
+	<plnk:partnerLinkType name="CountryInfoCheckReqABCS">
+		<plnk:role name="CountryInfoCheckReqABCSProvider" portType="client:CountryInfoCheckReqABCS"/>
+	</plnk:partnerLinkType>
+</wsdl:definitions>
